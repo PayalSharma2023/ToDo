@@ -147,16 +147,15 @@ const getUserTask = async (req, res) => {
     try{
         const userTask = await TaskModel.find({createdBy : userId});
         res.status(200).json({
-            message : "successfully retrieved tasks for the users"
-        })
-
-    } catch (err) {
-        res.status(500).json({
-            message : "internal server error ",
+            message : "successfully retrieved tasks for the users",
             task : userTask
         })
+    } catch (err) {
+        res.status(500).json({
+            message : "internal server error "
+        })
     }
-
+    
 }
 
 module.exports = {createTask, updateTask, deleteTask, getAllTask, getTaskById, getUserTask}
