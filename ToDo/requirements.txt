@@ -1,0 +1,20 @@
+** Use Cases **
+
+1. User Sign Up -> Email & Password & Name -> Add Data To Database
+
+2. User Login -> Email & Password == Database
+
+3. Add Task
+4. Delete Task
+5. Mark Complete
+6. Edit Task
+
+
+
+** APIs **
+
+1. User Sign Up
+   -- { email, name, password }
+
+2. User Log In
+   -- { email, password }

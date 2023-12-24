@@ -1,0 +1,28 @@
+{
+        "taskId": "65887819e67477804325633e"
+
+}
+
+{
+    "message": "successfully retrieved task by taskId",
+    "task": {
+        "_id": "65887819e67477804325633e",
+        "name": "DO Coding",
+        "time": "12:10 PM",
+        "date": "2023-12-24",
+        "isCompleted": true,
+        "createdBy": "sushant@gmail.com",
+        "__v": 0
+    }
+}
+
+
+{
+        "name": "prepare for viva",
+        "time": "7:10 AM",
+        "date": "2023-12-25",
+        "isCompleted": false,
+        "createdBy": "pxsps@gmail.com",
+    "taskId": "65887a026d8495ee6ecc1ee2"
+    
+}
