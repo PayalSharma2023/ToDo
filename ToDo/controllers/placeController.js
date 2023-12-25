@@ -36,4 +36,37 @@ const placeInfo = async (req, res) => {
     }
 }
 
-module.exports = {placeInfo};
+const updatePlace = async (req, res) => {
+    const updatedPlaceData = req.body
+    if (!updatedPlaceData.placeId || !updatedPlaceData.updatedFields) {
+        res.status(400).json({
+            message : "please provide placeId and updatedFields"
+        })
+        return
+    }
+    try{
+        const updatedPlace = await PlaceModel.findByIdAndUpdate(
+            updatedPlaceData.placeId,
+            {$set : updatedPlaceData.updatedFields},
+            {new : true}
+        )
+        if (!updatedPlace) {
+            res.status(404).json({
+                message : "place not found"
+            })
+            return
+        }
+        res.status(200).json({
+            message : "place updated successfully",
+            updatedPlace
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            message : "intrenal server error"
+        })
+
+    }
+}
+
+module.exports = {placeInfo, updatePlace};
