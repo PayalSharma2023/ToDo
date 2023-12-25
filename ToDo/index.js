@@ -59,5 +59,5 @@ app.use('/tasks', taskRoutes);
     
  */
 
-app.use('/place', placeRoutes);
+app.use('/places', placeRoutes);
 

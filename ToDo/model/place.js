@@ -9,7 +9,7 @@ const placeSchema = mongoose.Schema({
     visitedBy : String
 })
 
-const PlaceModel = mongoose.model('/place' , placeSchema );
+const PlaceModel = mongoose.model('Place' , placeSchema );
 
 
-module.exports = { PlaceModel }
+module.exports = { PlaceModel };

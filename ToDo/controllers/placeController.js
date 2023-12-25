@@ -1,4 +1,4 @@
-const PlaceModel = require('./../model/place');
+const {PlaceModel} = require('../model/place');
 
 const placeInfo = async (req, res) => {
     const place = req.body
@@ -11,7 +11,7 @@ const placeInfo = async (req, res) => {
     }
 
     try { 
-        const newPlace = await PlaceModel.json({
+        const newPlace = new PlaceModel({
             name : place.name,
             date : place.date,
             description : place.description,
@@ -20,20 +20,20 @@ const placeInfo = async (req, res) => {
             visitedBy : place.visitedBy
         })
 
-        newPlace.save()
+        await newPlace.save();
 
         res.status(200).json({
             message : "place added successfully",
             placeId : newPlace._id
         })
-
         return
 
-    } catch(err) {
+    } catch (err) {
+        console.log(err)
         res.status(500).json({
             message : "internal server error"
         })
     }
 }
 
-module.exports = {placeInfo}
+module.exports = {placeInfo};
