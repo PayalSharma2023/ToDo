@@ -37,6 +37,7 @@ const placeInfo = async (req, res) => {
 }
 
 const updatePlace = async (req, res) => {
+    
     const updatedPlaceData = req.body
     if (!updatedPlaceData.placeId || !updatedPlaceData.updatedFields) {
         res.status(400).json({

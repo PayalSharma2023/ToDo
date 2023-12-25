@@ -1,5 +1,5 @@
 const express = require('express');
-const{ placeInfo} = require('./../controllers/placeController');
+const{ placeInfo, updatePlace} = require('./../controllers/placeController');
 
 const router = express.Router();
 
