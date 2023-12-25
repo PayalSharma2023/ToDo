@@ -11,7 +11,7 @@ const placeInfo = async (req, res) => {
     }
 
     try { 
-        const newPlace = new PlaceModel.json({
+        const newPlace = await PlaceModel.json({
             name : place.name,
             date : place.date,
             description : place.description,

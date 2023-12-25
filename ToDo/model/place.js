@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const placeSchema = PlaceModel.Schema({
+const placeSchema = mongoose.Schema({
     name : String,
     date : String,
     description : String,
