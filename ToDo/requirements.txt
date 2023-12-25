@@ -9,7 +9,9 @@
 5. Mark Complete
 6. Edit Task
 
-
+7. add place
+8. delete place
+9. edit place
 
 ** APIs **
 
@@ -18,3 +20,4 @@
 
 2. User Log In
    -- { email, password }
+   
