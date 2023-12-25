@@ -37,7 +37,7 @@ const placeInfo = async (req, res) => {
 }
 
 const updatePlace = async (req, res) => {
-    
+
     const updatedPlaceData = req.body
     if (!updatedPlaceData.placeId || !updatedPlaceData.updatedFields) {
         res.status(400).json({
@@ -70,4 +70,33 @@ const updatePlace = async (req, res) => {
     }
 }
 
-module.exports = {placeInfo, updatePlace};
+const deletePlace = async (req, res) => {
+    const placeToDeleteId = req.body.placeId
+    if (!deletePlaceData){
+        res.status(400).json({
+            message : "please provide placeId"
+        })
+        return
+    }
+    try {
+        const deletedplace = await PlaceModel.findByIdAnddelete(placeToDeleteId)
+        if (!deletePlace) {
+            res.status(404).json({
+                message : "place not found"
+            })
+            return
+        }
+                    
+        req.status(200).json({
+            message : "place deleted successfully",
+            deletedplace
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            message : "internal server error"
+        })
+    }
+}
+
+module.exports = {placeInfo, updatePlace, deletePlace};
