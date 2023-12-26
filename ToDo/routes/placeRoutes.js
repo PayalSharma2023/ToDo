@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post('/places', placeInfo);
 router.put('/update', updatePlace);
-router.delete('/delete', deletePlace)
+router.delete('/delete', deletePlace);
 
 module.exports = router;
