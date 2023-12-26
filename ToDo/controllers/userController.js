@@ -23,7 +23,7 @@ const createUser = async (req, res) => {
             message: 'User Created Successfully',
             userId : newUser._id
         })
-        return
+        return 
 
     } catch (err) {
         console.log(err);

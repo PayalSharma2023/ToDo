@@ -3,11 +3,11 @@ const {createTask,  updateTask, deleteTask, getAllTask, getTaskById, getUserTask
 
 const router = express.Router()
 
-router.post('/tasks', createTask);
-router.put('/tasks/update', updateTask); // use put or patch for updating
-router.delete('/tasks/delete', deleteTask);
-router.get('/tasks', getAllTask);
-router.get('/tasks/:taskId', getTaskById);
-router.get('/tasks/user/:userId', getUserTask);
+router.post('/create', createTask);
+router.put('/update', updateTask); // use put or patch for updating
+router.delete('/delete', deleteTask);
+router.get('/', getAllTask);
+router.get('/:taskId', getTaskById);
+router.get('/user/:userId', getUserTask);
 
 module.exports = router;

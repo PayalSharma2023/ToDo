@@ -49,3 +49,17 @@ users
     "password" : "oppriya454",
     "userId": "658b165c3687dc14a59152e9"
 }
+
+
+task
+
+{
+    "name" : "Exercise",
+    "time" : "4:00 AM",
+    "date" : "21/12/2023",
+    "isCompleted": false,
+    "createdBy": "payalsharma@gmail.com",
+    "taskId": "658b1b8763588d0fc6fb3544"
+
+
+}
