@@ -134,7 +134,12 @@ const getAllPlacesToExplore = async (req, res) => {
 
 const getAllPlaces = async (req, res) => {
     try {
-        
+        const AllPlaces = await PlaceModel.find().exec();
+
+        res.status(200).json({
+            message : "place data retrieved successfully",
+            Places : AllPlaces
+        })
 
     } catch (err) {
         res.status(500).json({
@@ -143,4 +148,27 @@ const getAllPlaces = async (req, res) => {
     }
 }
 
-module.exports = {placeInfo, updatePlace, deletePlace, getAllPlacesVisited, getAllPlacesToExplore};
+const getPlaceById = async (req, res) => {
+    const placeId = req.body.placeId
+    try {
+        const place = PlaceModel.findById(placeId);
+
+        if (!placeId) {
+            res.status(404).json({
+                message : "Place not found"
+            })
+            return
+        }
+
+        res.status(200).json({
+            message : "place retrieved successfully",
+            place : place
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            message : "internal server error"
+        })
+    }
+}
+module.exports = {placeInfo, updatePlace, deletePlace, getAllPlacesVisited, getAllPlacesToExplore, getAllPlaces, getPlaceById};
