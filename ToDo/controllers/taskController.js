@@ -45,7 +45,11 @@ const updateTask = async (req, res) => {
     }
 
     try {
-        const updatedTask = await TaskModel.findByIdAndUpdate(
+        const updatedTask = await TaskModel.findByIdAndUpdate( 
+            //"aabs" , 
+            //{
+             //   isCompleted : true
+           // }
             updatedTaskdata.taskId,
             {$set : updatedTaskdata.updatedFields},
             {new : true}
@@ -104,7 +108,7 @@ const deleteTask = async (req, res) => {
 
 const getAllTask = async (req, res) => {
     try {
-        const AllTasks = await TaskModel.find().exec();
+        const AllTasks = await TaskModel.find();
         //console.log("alltasks", AllTasks);
         res.status(200).json({
             message : "data retrieved successfully",
