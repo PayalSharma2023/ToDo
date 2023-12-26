@@ -80,7 +80,7 @@ const deletePlace = async (req, res) => {
     }
     try {
         const deletedplace = await PlaceModel.findByIdAnddelete(placeToDeleteId)
-        if (!deletePlace) {
+        if (!placeToDeleteId) {
             res.status(404).json({
                 message : "place not found"
             })
@@ -99,4 +99,48 @@ const deletePlace = async (req, res) => {
     }
 }
 
-module.exports = {placeInfo, updatePlace, deletePlace};
+const getAllPlacesVisited = async (req, res) => {
+    try {
+        const visitedPlaces = await PlaceModel.find({placeVisited : true});
+
+        res.status(200).json({
+            message : "visited place data retrieved successfully",
+            Places : visitedPlaces
+        });       
+
+    } catch (err) {
+        res.status(500).json({
+            message : "internal server error"
+        })
+    }
+
+}
+
+const getAllPlacesToExplore = async (req, res) => {
+    try {
+        const placesToExplore = await PlaceModel.find({ placeVisited : false });
+
+        res.status(200).json({
+            message : "places to explore data retrieved successfully",
+            places : placesToExplore
+        })
+        
+    } catch (err) {
+        res.status(500).json({
+            message : "internal server error"
+        })
+    }
+}
+
+const getAllPlaces = async (req, res) => {
+    try {
+        
+
+    } catch (err) {
+        res.status(500).json({
+            message : "internal server error"
+        })
+    }
+}
+
+module.exports = {placeInfo, updatePlace, deletePlace, getAllPlacesVisited, getAllPlacesToExplore};
