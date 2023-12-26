@@ -14,18 +14,19 @@ const createUser = async (req, res) => {
         const newUser = new UserModel({
             name : data.name,
             email : data.email,
-            password : data.password  
+            password : data.password
           })
       
         newUser.save()
 
         res.status(200).json({
             message: 'User Created Successfully',
-            userId : userId
+            userId : newUser._id
         })
         return
 
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             message: 'Internal Server Error'
         })
@@ -62,4 +63,42 @@ const loginUser = async (req, res) => {
 
 }
 
-module.exports = { createUser, loginUser};
+const deleteUser = async (req, res) => {
+    const userId = req.body.userId
+
+    try{
+        const deletedUser = await UserModel.findByIdAndDelete(userId)
+         if (userId == undefined) {
+            res.status(404).json({
+                message : "user not found"
+            })
+            return
+         }
+         res.status(200).json({
+            message : "user deleted successfully",
+            deletedUser
+         })
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message : 'intrenal servor error'
+        })
+    }
+}
+
+const getAllUser = async (req, res) => {
+    try {
+        const Alluser = await UserModel.find();
+        res.status(200).json({
+            message : "user data retrieved successfully",
+            Alluser
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            message : "internal server error"
+        })
+    }
+}
+module.exports = { createUser, loginUser, deleteUser, getAllUser};

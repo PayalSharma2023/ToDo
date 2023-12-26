@@ -26,3 +26,26 @@
     "taskId": "65887a026d8495ee6ecc1ee2"
     
 }
+
+{
+    {"_id":{"$oid":"65886f8b3b18d7c471e846c1"},"name":"payal","email":"opg@gmail.com","password":"hjk","__v":{"$numberInt":"0"}}
+}
+query 
+
+
+users
+
+{
+    "name" : "Payal Sharma",
+    "email" : "payalsharma@gmail.com",
+    "password" : "op12@iofgu",
+    "userId": "658b15b1325b76f1bcc80576"
+
+}
+
+{
+    "name" : "Priya Kumari",
+    "email" : "priyaKumari@gmail.com",
+    "password" : "oppriya454",
+    "userId": "658b165c3687dc14a59152e9"
+}
