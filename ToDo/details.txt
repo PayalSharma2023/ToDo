@@ -63,3 +63,12 @@ task
 
 
 }
+
+{
+    "name" : "Preaparing for Practicals",
+    "time" : "7:00 AM",
+    "date" : "22/12/2023",
+    "isCompleted": true ,
+    "createdBy": "payalsharma@gmail.com",
+    "taskId": "658c60b1c61687c1289b3ecb"
+}
