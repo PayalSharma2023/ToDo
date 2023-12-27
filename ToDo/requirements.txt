@@ -21,3 +21,16 @@
 2. User Log In
    -- { email, password }
    
+
+validation 
+The validatorjs library simplifies data validation in JavaScript. From the official site, some of the advantages of validatorjs are:
+
+Ability to work in both the browser and Node
+Readable and declarative validation rules
+Error messages with multilingual support
+CommonJS/Browserify support
+ES6 support
+
+install
+
+git clone -b validation-starter https://github.com/lawrenceagles/validatorjs-example

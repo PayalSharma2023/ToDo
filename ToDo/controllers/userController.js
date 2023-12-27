@@ -1,4 +1,5 @@
 const { UserModel } = require('../model/user');
+const validator = require('../helpers/validate');
 
 const createUser = async (req, res) => {
     const data = req.body
@@ -92,7 +93,8 @@ const getAllUser = async (req, res) => {
         const Alluser = await UserModel.find();
         res.status(200).json({
             message : "user data retrieved successfully",
-            Alluser
+            user : Alluser,
+            email : email
         })
 
     } catch (err) {
@@ -101,4 +103,5 @@ const getAllUser = async (req, res) => {
         })
     }
 }
+
 module.exports = { createUser, loginUser, deleteUser, getAllUser};
