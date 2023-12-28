@@ -19,7 +19,6 @@ mongoose.connect(mongoDBString)
         })
     })
     .catch(err => console.log('Error connecting to database: ' + err))
-
 /* 
    // ToDo
        1. create signup API

@@ -2,9 +2,9 @@ const { TaskModel } = require('../model/task');
 
 const createTask = async (req, res) => {
     const task = req.body
-    if (task.name == undefined || task.time == undefined || task.date == undefined || task.isCompleted == undefined || task.createdBy == undefined) {
+    if (task.name == undefined || task.time == undefined || task.isCompleted == undefined || task.createdBy == undefined) {
         res.status(400).json({
-            message : 'please provide task name , time , date, isCompleted, createdBy'
+            message : 'please provide task name , time , isCompleted, createdBy'
         })
         return
     }
@@ -13,7 +13,7 @@ const createTask = async (req, res) => {
         const newtask = new TaskModel({
             name : task.name,
             time : task.time,
-            date : task.date,
+            date : Date.now(),
             isCompleted : task.isCompleted,
             createdBy : task.createdBy
         })
@@ -108,7 +108,7 @@ const deleteTask = async (req, res) => {
 
 const getAllTask = async (req, res) => {
     try {
-        const AllTasks = await TaskModel.find();
+        const AllTasks = await TaskModel.find().sort({date : 1, time : 1});
         //console.log("alltasks", AllTasks);
         res.status(200).json({
             message : "data retrieved successfully",
