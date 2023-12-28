@@ -4,6 +4,7 @@ const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const placeRoutes = require('./routes/placeRoutes');
 
+const path = require('path')
 const app = express();
 
 app.use(express.json());

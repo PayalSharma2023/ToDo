@@ -1,4 +1,5 @@
 const { TaskModel } = require('../model/task');
+const aqp = require('api-query-params')
 
 const createTask = async (req, res) => {
     const task = req.body
@@ -162,4 +163,30 @@ const getUserTask = async (req, res) => {
     
 }
 
-module.exports = {createTask, updateTask, deleteTask, getAllTask, getTaskById, getUserTask}
+const searchTask = async (req, res, next) => {
+   
+    try {
+        const {filter, sortBYTime, sortByDate} = aqp(req.query)
+        const search = await TaskModel.find(filter).sort(sortByDate({date : -1})).sort(sortBYTime({time : -1})) 
+        .exec((err, search) => {
+            if(err) {
+                return next(err);
+            }
+            res.send(search)
+    
+        })
+        res.status(200).json({
+            message : "filtered and sorted successfully",
+            search
+        })
+
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message : "internal server error"
+        })
+    }
+    
+}
+module.exports = {createTask, updateTask, deleteTask, getAllTask, getTaskById, getUserTask, searchTask}
