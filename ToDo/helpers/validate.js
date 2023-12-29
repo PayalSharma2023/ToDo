@@ -1,9 +1,22 @@
 const Validator = require('validatorjs')
 
 //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
-
+const data = {
+    name: 'John Doe',
+    email: 'john@example.com',
+    age: 25,
+};
 const rules = {
-    name : "string| "
+    name : "required|string ",
+    email: "required|email",
+    age: "required|numeric"
+}
+const validation = Validator(data, rules);
+if (validation.passes()) {
+    console.log('Validation passed');
+} else {
+    console.log('Validation failed');
+    console.log(validation.errors.all());
 }
 //  const validator = async(body, rules, customMessages, callback) =>  {
 //     const validation = new Validator(body, rules, customMessages);

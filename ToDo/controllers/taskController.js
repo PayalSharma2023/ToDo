@@ -163,21 +163,40 @@ const getUserTask = async (req, res) => {
     
 }
 
-const searchTask = async (req, res, next) => {
-   
+const searchTask = async (req, res) => {
+    res.send('time:' + req.param.time)
     try {
-        const {filter, sortBYTime, sortByDate} = aqp(req.query)
-        const search = await TaskModel.find(filter).sort(sortByDate({date : -1})).sort(sortBYTime({time : -1})) 
-        .exec((err, search) => {
-            if(err) {
-                return next(err);
-            }
-            res.send(search)
+        const {time , date} = aqp(req.query.getAllTask)
+        if (time){
+            await TaskModel.findAll().sort({time : 1}).exec((err, search) => {
+                if(err) {
+                    console.log(err)
+                }else{
+                    res.send(search)
+                }
+                
+            });
+            
+            res.status(200).json({
+                message : "task sorted by time successfully",
+
+            })
+        } 
+        if (date) {
+            const search = TaskModel.find().sort({date : 1});
+            return search
+        }
+        // const search = await TaskModel.find().sort(sortByDate({date : 1})).sort(sortBYTime({time : 1})) 
+        // .exec((err, search) => {
+        //     if(err) {
+        //         console.log(err)
+        //         return next(err);
+        //     }
+        //     res.send(search)
     
-        })
+      //})
         res.status(200).json({
-            message : "filtered and sorted successfully",
-            search
+            message : "filtered and sorted successfully"
         })
 
 

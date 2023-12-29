@@ -1,5 +1,5 @@
 const { UserModel } = require('../model/user');
-const validator = require('../helpers/validate');
+//const validator = require('../helpers/validate');
 
 const createUser = async (req, res) => {
     const data = req.body
