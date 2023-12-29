@@ -189,20 +189,11 @@ const searchTask = async (req, res) => {
             console.log("sorting tasks based on date")
             return res.status(200).json(search)
         }
-        // const search = await TaskModel.find().sort(sortByDate({date : 1})).sort(sortBYTime({time : 1})) 
-        // .exec((err, search) => {
-        //     if(err) {
-        //         console.log(err)
-        //         return next(err);
-        //     }
-        //     res.send(search)
-    
-      //})
+
         res.status(200).json({
             message : "filtered and sorted successfully"
         })
-
-
+        
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -242,27 +233,27 @@ const searchTask = async (req, res) => {
 
 // }
 
-const searchTask1 =  (req, res) => {
-    console.log("print" + req.query)
-    try {
-        const { filter, sort } = aqp(req.query);
-        console.log("Parsed Query:", filter, sort);
+// const searchTask1 =  (req, res) => {
+//     console.log("print" + req.query)
+//     try {
+//         const { filter, sort } = aqp(req.query);
+//         console.log("Parsed Query:", filter, sort);
 
-        const search = TaskModel.find(filter).sort(sort).exec();
+//         const search = TaskModel.find(filter).sort(sort).exec();
 
-        console.log("Search Results:", search);
+//         console.log("Search Results:", search);
 
-        res.status(200).json({
-            message: "tered and sorted successfully",
-            tasks: search
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            message: "internal server error"
-        });
-    }
-};
+//         res.status(200).json({
+//             message: "tered and sorted successfully",
+//             tasks: search
+//         });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({
+//             message: "internal server error"
+//         });
+//     }
+// };
 
 const tempraryFunction = (req, res) => {
     const color = req.query.color
