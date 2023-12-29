@@ -11,11 +11,11 @@ router.get('/', getAllTask);
 // Commenting below line
 // /tasks/search
 // { taskId : search }
-// router.get('/:taskId', getTaskById);
 
 // localhost:<PORT>/tasks/user/<ID>
 router.get('/user/:userId', getUserTask);
 router.get('/search', searchTask);
+router.get('/:taskId', getTaskById);
 
 
 // localhost:<PORT>/tasks/temprary/myValue/myValueTwo
