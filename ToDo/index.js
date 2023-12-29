@@ -27,27 +27,7 @@ mongoose.connect(mongoDBString)
        1. create signup API
        2. create login API
  */
-app.get('/search',async (req, res) => {
-    console.log(req.query)
-    try{
-        //const {time , date} = aqp(req.query.getAllTask)
-        if (req.query.time){
-            //res.send()  
-            res.render('/getAllTask',TaskModel.find().sort({time : 1}))
-        };
-        
-            
-        if (req.query.date) {
-            const search = await TaskModel.find(req.query).sort({date : 1});
-            res.status(200).json({ search})
-        }
 
-    } catch (err) {
-        console.log(error)
-
-    }
-    res.send("http://localhost:3002/tasks/")
-})
 app.use('/users', userRoutes);
 /*
         // ToDo
