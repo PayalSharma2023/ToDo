@@ -3,10 +3,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const placeRoutes = require('./routes/placeRoutes');
-const TaskModel = require('./model/task')
 
-const path = require('path');
-const { error } = require('console');
 const app = express();
 
 app.use(express.json());
