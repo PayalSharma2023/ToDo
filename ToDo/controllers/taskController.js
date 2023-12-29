@@ -36,6 +36,8 @@ const createTask = async (req, res) => {
 }
 
 const updateTask = async (req, res) => {
+    console.log("Executed updateTask")
+
     const updatedTaskdata = req.body
     
     if (updatedTaskdata.taskId == undefined || updatedTaskdata.updatedFields == undefined) {
@@ -77,6 +79,8 @@ const updateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
     const taskToDeleteId = req.body.taskId;
+    console.log("Executed deleteTask")
+
     
     if (taskToDeleteId == undefined) {
         res.status(400).json({
@@ -125,6 +129,8 @@ const getAllTask = async (req, res) => {
 }
 
 const getTaskById = async (req, res) => {
+    console.log("Executed getTaskById")
+
     const taskId = req.body.taskId;
     try{
         const task = await TaskModel.findById(taskId);
@@ -164,27 +170,24 @@ const getUserTask = async (req, res) => {
 }
 
 const searchTask = async (req, res) => {
-    res.send('time:' + req.param.time)
     try {
-        const {time , date} = aqp(req.query.getAllTask)
+        const time = req.query.time;
+        const date = req.query.date;
+        console.log("query", req.query)
         if (time){
-            await TaskModel.findAll().sort({time : 1}).exec((err, search) => {
-                if(err) {
-                    console.log(err)
-                }else{
-                    res.send(search)
-                }
-                
-            });
-            
-            res.status(200).json({
+            console.log("sorting tasks based on time")
+            const search = await TaskModel.find().sort({time : 1});
+            return res.status(200).json({
                 message : "task sorted by time successfully",
-
+                search
             })
-        } 
+                
+        };
+            
         if (date) {
-            const search = TaskModel.find().sort({date : 1});
-            return search
+            const search = await TaskModel.find().sort({date : 1});
+            console.log("sorting tasks based on date")
+            return res.status(200).json(search)
         }
         // const search = await TaskModel.find().sort(sortByDate({date : 1})).sort(sortBYTime({time : 1})) 
         // .exec((err, search) => {
@@ -208,4 +211,75 @@ const searchTask = async (req, res) => {
     }
     
 }
-module.exports = {createTask, updateTask, deleteTask, getAllTask, getTaskById, getUserTask, searchTask}
+
+// const searchTask = async (req, res) => {
+//     try {
+//         const {filter, sort} = aqp(req.query);
+//         console.log("parsed Query : ", filter, sort);
+
+//         let query = await TaskModel.find();
+
+//         if(filter && filter.date) {
+//             query = query.where({date : filter.date})
+//         }
+//         if(filter && filter.time) {
+//             query = query.sort({time : 1})
+//         }
+        
+
+//         const search = await query.exec();
+//         res.status(200).json({
+//             message : "filtered and sorted successfully",
+//             tasks : search
+//         })
+
+//     } catch (err) {
+//         console.log(error)
+//         res.status(500).json({
+//             message : "internal server error"
+//         })
+//     }
+
+// }
+
+const searchTask1 =  (req, res) => {
+    console.log("print" + req.query)
+    try {
+        const { filter, sort } = aqp(req.query);
+        console.log("Parsed Query:", filter, sort);
+
+        const search = TaskModel.find(filter).sort(sort).exec();
+
+        console.log("Search Results:", search);
+
+        res.status(200).json({
+            message: "tered and sorted successfully",
+            tasks: search
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: "internal server error"
+        });
+    }
+};
+
+const tempraryFunction = (req, res) => {
+    const color = req.query.color
+    const priceLowToHigh = req.query.priceLowToHigh
+
+    if (color) {
+        // Some logic to find jens with only given color
+
+        if (priceLowToHigh) {
+            // Some logic to sort products by price
+        } else {
+            // Return as it is
+        }
+
+    } else {
+        // Fetch and return all colors jens
+    }
+}
+
+module.exports = {createTask, updateTask, deleteTask, getAllTask, getTaskById, getUserTask, searchTask, tempraryFunction}
