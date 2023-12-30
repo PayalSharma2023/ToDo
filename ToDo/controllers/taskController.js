@@ -1,5 +1,4 @@
 const { TaskModel } = require('../model/task');
-const aqp = require('api-query-params')
 
 const createTask = async (req, res) => {
     const {name, time, isCompleted, createdBy} = req.body;
