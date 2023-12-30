@@ -2,8 +2,8 @@ const { TaskModel } = require('../model/task');
 const aqp = require('api-query-params')
 
 const createTask = async (req, res) => {
-    const task = req.body
-    if (task.name == undefined || task.time == undefined || task.isCompleted == undefined || task.createdBy == undefined) {
+    const {name, time, isCompleted, createdBy} = req.body;
+    if (name == undefined || time == undefined || isCompleted == undefined || createdBy == undefined) {
         res.status(400).json({
             message : 'please provide task name , time , isCompleted, createdBy'
         })
@@ -12,11 +12,11 @@ const createTask = async (req, res) => {
 
     try {
         const newtask = new TaskModel({
-            name : task.name,
-            time : task.time,
+            name : name,
+            time : time,
             date : Date.now(),
-            isCompleted : task.isCompleted,
-            createdBy : task.createdBy
+            isCompleted : isCompleted,
+            createdBy : createdBy
         })
 
         newtask.save()
@@ -38,9 +38,9 @@ const createTask = async (req, res) => {
 const updateTask = async (req, res) => {
     console.log("Executed updateTask")
 
-    const updatedTaskdata = req.body
+    const {taskId, updatedFields} = req.body
     
-    if (updatedTaskdata.taskId == undefined || updatedTaskdata.updatedFields == undefined) {
+    if (taskId == undefined || updatedFields == undefined) {
         res.status(400).json({
             message : "please provide taskId and updatedfields"
         })
@@ -53,8 +53,8 @@ const updateTask = async (req, res) => {
             //{
              //   isCompleted : true
            // }
-            updatedTaskdata.taskId,
-            {$set : updatedTaskdata.updatedFields},
+            taskId,
+            {$set : updatedFields},
             {new : true}
         )
         if (!updatedTask){
@@ -173,6 +173,8 @@ const searchTask = async (req, res) => {
     try {
         const time = req.query.time;
         const date = req.query.date;
+        const paginate = req.query.paginate;
+        const pipeline = req.query.pipeline
         console.log("query", req.query)
         if (time){
             console.log("sorting tasks based on time")
@@ -190,9 +192,36 @@ const searchTask = async (req, res) => {
             return res.status(200).json(search)
         }
 
-        res.status(200).json({
-            message : "filtered and sorted successfully"
-        })
+        if (paginate) {
+            const limitValue = req.query.limit ;
+            const skipValue = req.query.skip ;
+            const post = await TaskModel.find().limit(limitValue).skip(skipValue);
+            res.status(200).json({
+                message : `successfully paginted tasks with limit = ${limitValue} and skips = ${skipValue} `,
+                post 
+            })
+        }
+        if(pipeline){
+            const aggregation = await TaskModel.aggregate([
+                {
+                    $match : {"createdBy" : getTaskById}
+                },
+                {
+                    $group: {
+                        _id : `$isCompleted`,
+                        count : {$sum : 1}
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        isCompleted: `$_id`,
+                        count: 1
+                    }
+                }
+            ]);
+            res.status(200).json(aggregation)
+        }
 
     } catch (err) {
         console.log(err);
