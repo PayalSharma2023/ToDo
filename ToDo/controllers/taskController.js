@@ -216,7 +216,8 @@ const searchTask = async (req, res) => {
                     $project: {
                         _id: 0,
                         isCompleted: `$_id`,
-                        count: 1
+                        count: 1,
+                        message : "successfully aggregated tasks"
                     }
                 }
             ]);
