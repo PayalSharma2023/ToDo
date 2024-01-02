@@ -1,4 +1,6 @@
 const { UserModel } = require('../model/user');
+const bcrypt = require('bcrypt')
+
 //const validator = require('../helpers/validate');
 
 const createUser = async (req, res) => {
@@ -23,6 +25,8 @@ const createUser = async (req, res) => {
         res.status(200).json({
             message: 'User Created Successfully',
             userId : newUser._id
+
+        
         })
         return 
 

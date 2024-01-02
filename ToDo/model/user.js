@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const bcrypt = require("bcrypt")
+
 
 const userSchema = new mongoose.Schema({
     name:{type : String },
@@ -9,6 +11,12 @@ const userSchema = new mongoose.Schema({
             return `${props.path} must have length 8 , got '${props.value}'`;
         }
     })}
+})
+
+userSchema.
+
+const pass = userSchema.bcrypt.hash(pass, function () {
+    
 })
 
 
