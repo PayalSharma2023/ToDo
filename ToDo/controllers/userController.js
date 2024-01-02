@@ -1,5 +1,4 @@
 const { UserModel } = require('../model/user');
-const bcrypt = require('bcrypt')
 
 //const validator = require('../helpers/validate');
 
