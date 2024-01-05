@@ -52,8 +52,8 @@ const loginUser = async (req, res) => {
     try {
         const {email, password} = req.body
         const exisitingUser = await UserModel.findOne({
-            email ,
-            password,
+            email : email ,
+            password : password
         })
         //console.log(email, password)
         console.log(exisitingUser)
