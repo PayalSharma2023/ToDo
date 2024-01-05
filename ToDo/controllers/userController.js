@@ -50,15 +50,21 @@ const loginUser = async (req, res) => {
         return
     }
     try {
+        const {email, password} = req.body
         const exisitingUser = await UserModel.findOne({
-            email : email,
-            password : password
+            email ,
+            password,
         })
-    
-        if (!exisitingUser) {
+        //console.log(email, password)
+        console.log(exisitingUser)
+        if (exisitingUser === undefined) {
+            console.log(email, password)
+
             res.status(400).json({
                 message: 'Invalid email or password'
             })
+            console.log(password)
+
             return
         }
 
@@ -120,4 +126,16 @@ const getAllUser = async (req, res) => {
     }
 }
 
-module.exports = { createUser, loginUser, deleteUser, getAllUser};
+const verifyToken = async (req, res, next) => {
+    const token = req.header('Authorization');
+    if (!token) {res.status(401).json({error : "invalid Token"})}
+    try{
+        const decoded = jwt.verify(token, 'your-secret-key');
+        req.userId = decoded.userId;
+        next()
+    } catch (err) {
+        res.status(500).json({message : "internal server error"})
+    }
+}
+
+module.exports = { createUser, loginUser, deleteUser, getAllUser, verifyToken};
