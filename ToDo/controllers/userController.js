@@ -1,11 +1,13 @@
 const { UserModel } = require('../model/user');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 //const validator = require('../helpers/validate');
 
 const createUser = async (req, res) => {
-    const data = req.body
+    const {email, password, name } = req.body
 
-    if (data.email === undefined || data.password === undefined || data.name === undefined) {
+    if (email === undefined || password === undefined || name === undefined) {
         res.status(400).json({
             message: 'Please provide email, password and name'
         })
@@ -13,22 +15,21 @@ const createUser = async (req, res) => {
     }
 
     try {
+        const hash_password = await bcrypt.hash(password, 8)  
         const newUser = new UserModel({
-            name : data.name,
-            email : data.email,
-            password : data.password
+            name : name,
+            email : email,
+            password : hash_password
           })
       
-        newUser.save()
+        await newUser.save()
 
         res.status(200).json({
-            message: 'User Created Successfully',
-            userId : newUser._id
-
-        
+            message: 'User Registered Successfully',
+            userId : newUser._id,
         })
         return 
-
+        
     } catch (err) {
         console.log(err);
         res.status(500).json({
