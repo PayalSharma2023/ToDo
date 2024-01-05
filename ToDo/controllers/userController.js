@@ -29,7 +29,7 @@ const createUser = async (req, res) => {
             userId : newUser._id,
         })
         return 
-        
+
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -41,31 +41,43 @@ const createUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
-    const data = req.body
+    const {email, password} = req.body
 
-    if (data.email === undefined || data.password === undefined) {
+    if (email === undefined || password === undefined) {
         res.status(400).json({
             message: 'Please provide email and password'
         })
         return
     }
-
-    const exisitingUser = await UserModel.findOne({
-        email : data.email,
-        password : data.password
-    })
-
-    if (!exisitingUser) {
-        res.status(400).json({
-            message: 'Invalid email or password'
+    try {
+        const exisitingUser = await UserModel.findOne({
+            email : email,
+            password : password
         })
-        return
-    } else {
+    
+        if (!exisitingUser) {
+            res.status(400).json({
+                message: 'Invalid email or password'
+            })
+            return
+        }
+
+        const passwordMatch = await bcrypt.compare(password, exisitingUser.password)
+        if (!passwordMatch) {
+            res.status(401).json({
+                message : "Authentication failed"
+            })
+            return
+        }
+        const token = jwt.sign({userId : exisitingUser._id}, 'your_secret_key', {expiresIn : '1h',});
         res.status(200).json({
+            token,
             message: 'User Logged In Successfully'
         })
-    }
 
+    } catch (err) {
+        res.status(500).json({message : "internal server error"})
+    } 
 }
 
 const deleteUser = async (req, res) => {
