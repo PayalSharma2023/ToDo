@@ -3,13 +3,15 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const placeRoutes = require('./routes/placeRoutes');
+require('dotenv').config()
 
 const app = express();
 
 app.use(express.json());
 
 // CONNECT SERVER WITH DATABASE
-const mongoDBString = "mongodb+srv://peacko:peackopeacko1312@peacko.bl5glnj.mongodb.net/?retryWrites=true&w=majority"
+
+const mongoDBString = process.env.DATABASE_URL
 
 mongoose.connect(mongoDBString)
     .then(c => {
