@@ -4,9 +4,10 @@ const { createUser, loginUser, deleteUser, getAllUser, verifyToken } = require('
 
 const router = express.Router()
 
-router.get('/', verifyToken);
+
 router.post('/signup', createUser);
 router.post('/login', loginUser);
+router.get('/verify', verifyToken);
 router.delete('/delete', deleteUser);
 router.get('/getAllUser', getAllUser);
 

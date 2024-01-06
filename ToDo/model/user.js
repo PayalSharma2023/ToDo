@@ -22,17 +22,18 @@ const userSchema = new mongoose.Schema({
         message : function(props) {
             return `${props.path} must have length 8 , got '${props.value}'`;
         }
-    })}
-})
-
-userSchema.pre('save', async function(next){
-    this.password = await bcrypt.hash(this.password, 8)
-    next()
-})
-
-userSchema.methods.checkPassword = async function(enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password)
+    })
 }
+})
+
+// userSchema.pre('save', async function(next){
+//     this.password = await bcrypt.hash(this.password, 8)
+//     next()
+// })
+
+// userSchema.methods.checkPassword = async function(enteredPassword) {
+//     return await bcrypt.compare(enteredPassword, this.password)
+// }
 
 
 const UserModel = mongoose.model('user', userSchema)

@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 // CONNECT SERVER WITH DATABASE
-const mongoDBString = 'mongodb+srv://peacko:peackopeacko1312@peacko.bl5glnj.mongodb.net/?retryWrites=true&w=majority'
+const mongoDBString = "mongodb+srv://peacko:peackopeacko1312@peacko.bl5glnj.mongodb.net/?retryWrites=true&w=majority"
 
 mongoose.connect(mongoDBString)
     .then(c => {

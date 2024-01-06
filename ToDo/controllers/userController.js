@@ -15,14 +15,16 @@ const createUser = async (req, res) => {
     }
 
     try {
-        const hash_password = await bcrypt.hash(password, 8)  
+        const hash_password = await bcrypt.hash(password, 10)  
+        console.log('Hashed While Sign Up: ', hash_password)
         const newUser = new UserModel({
             name : name,
             email : email,
             password : hash_password
           })
       
-        await newUser.save()
+        const response= await newUser.save();
+        console.log("response=>",response);
 
         res.status(200).json({
             message: 'User Registered Successfully',
@@ -52,23 +54,28 @@ const loginUser = async (req, res) => {
     try {
         const {email, password} = req.body
         const exisitingUser = await UserModel.findOne({
-            email : email ,
-            password : password
+            email : email 
         })
-        //console.log(email, password)
-        console.log(exisitingUser)
+       
+        console.log("exisitingUser=>",exisitingUser);
         if (exisitingUser === undefined) {
             console.log(email, password)
-
             res.status(400).json({
-                message: 'Invalid email or password'
+                message: 'Invalid email or password',
             })
-            console.log(password)
-
             return
-        }
 
-        const passwordMatch = await bcrypt.compare(password, exisitingUser.password)
+        }
+        console.log("password=>",password);
+        console.log("exisitingUser=>",exisitingUser.password);
+
+        // const passwordMatch = await bcrypt.compareSync(exisitingUser.password.toString(),password.toString())
+        const passwordMatch=await bcrypt.compare(password,exisitingUser.password);
+
+        // console.log('Given Pass: ', password)
+        // console.log('DB Pass: ', exisitingUser.password)
+        // console.log('Password Match: ', passwordMatch);
+        console.log("passwordMatch=>",passwordMatch);
         if (!passwordMatch) {
             res.status(401).json({
                 message : "Authentication failed"
@@ -80,12 +87,12 @@ const loginUser = async (req, res) => {
             token,
             message: 'User Logged In Successfully'
         })
+        return
 
     } catch (err) {
-        res.status(500).json({message : "internal server error"})
+      return   res.status(500).json({message : "internal server error" + err})
     } 
 }
-
 const deleteUser = async (req, res) => {
     const userId = req.body.userId
 
@@ -128,13 +135,15 @@ const getAllUser = async (req, res) => {
 
 const verifyToken = async (req, res, next) => {
     const token = req.header('Authorization');
-    if (!token) {res.status(401).json({error : "invalid Token"})}
+    if (!token) {res.status(401).json({message : "invalid Token"})}
     try{
-        const decoded = jwt.verify(token, 'your-secret-key');
+        const decoded = jwt.verify(token, 'your_secret_key');
         req.userId = decoded.userId;
+        console.log("authorized : ", decoded)
+        res.status(200).json({message : "token verified successfully"})
         next()
     } catch (err) {
-        res.status(500).json({message : "internal server error"})
+        res.status(500).json({message : "internal server error"+ err})
     }
 }
 
